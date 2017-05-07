@@ -58,11 +58,9 @@ var start =
         0, 7, 3,
         4, 2, 1];
 
-var end = [1, 2, 3,
-           8, 0, 4,
-           7, 6, 5];
 
 var opened = 0;
+
 // shallow entry-wise comparison
 function arraysEqual(array1, array2) {
     if (array1.length !== array2.length) return false;
@@ -99,6 +97,7 @@ var swap = function (arr, a, b) {
 }
 
 var manhattan = function (other) {
+    opened += 1;
     if (!other) {
         var other = end.slice();
     }
@@ -115,6 +114,22 @@ var manhattan = function (other) {
     return distance;
 }
 
+
+var end = [1, 2, 3,
+           8, 0, 4,
+           7, 6, 5];
+
+
+           //  0  1  2  3  4  5  6  7  8
+var mapping = [0, 1, 2, 5, 8, 7, 6, 3];
+//var mapping = [0, 1, 2, 8, -1, 3, 7, 6, 5]
+
+//Clockwise mapping of the node
+var getClockwiseIndex=function (index) {
+    return mapping[index];
+}
+
+
 //S(n) is the sequence score obtained by checking around the non-central squares in turn,
 // allotting 2 for every tile not followed by its proper successor and 1 in case that the center is not empty.
 var S = function (other) {
@@ -126,7 +141,9 @@ var S = function (other) {
         distance += 1;
     }
     for (var i = 0; i < 8; i++) {
-        if (other[i + 1] != end[i + 1]) {
+        if(i==4){continue;}
+        if (other[getClockwiseIndex(i+1)] != other[getClockwiseIndex(i)] +1) {
+            //console.log(other[i] + "   " +other[i+1]);
             distance += 2;
         }
     }
@@ -134,14 +151,16 @@ var S = function (other) {
 }
 
 var nilsson = function (other) {
+    opened += 1;
     if (!other) {
         var other = end.slice();
     }
-    return manhattan(other)+ (3* S(other));
+    return manhattan(other)+  S(other);
 }
 
 
 var misplaced = function (other) {
+    opened += 1;
     if (!other) {
         var other = end.slice();
     }
@@ -173,17 +192,40 @@ var getNeighborsMaxSwap = function (node) {
 }
 
 
+/*
+var getPermutations= function (other){
+    var temp = other.slice();
+    while(!(arraysEqual(temp, end))){
+        for (var i = 0; i < 9; i++) {
+            if ((temp.indexOf(i) != end.indexOf(i)) && (i != temp.indexOf(0))) {
+                swap(temp, temp.indexOf(0),i);
+            }
+        }
+        console.log(temp);
+
+    }
+
+}
+
+getPermutations();
+*/
+
+
+
+
+
 //n-MaxSwap: assume you can swap any tile with the "space". Use the number of steps it takes to solve this problem
 // as the heuristic value.
 var NMaxSwap = function (other) {
+    opened += 1;
     var results = aStar({
         start: start,
         isEnd: isEnd,
         neighbor: getNeighborsMaxSwap,
         distance: distance,
-        heuristic: XY,
+        heuristic: manhattan,
     });
-    console.log(results.cost);
+    //console.log(results.cost);
     return results.cost;
 }
 
@@ -193,41 +235,49 @@ var NMaxSwap = function (other) {
 
 //TODO: convert ot 1D
 var linearConflict = function (other) {
+    opened += 1;
     if (!other) {
         var other = end.slice();
     }
     var distance = 0;
     for (var i = 0; i < 9; i++) {
         //console.log("inloop");
-        var thisCoord = toTwoD(other, i);
-        var thisEndCoord = toTwoD(end, i);
+        var Tj = toTwoD(other, i);
+        var TjEnd = toTwoD(end, i);
         for (var j = 0; j < 9; j++) {
-            //console.log("inner loop");
             if (i != j) {
-                var thatCoord = toTwoD(other, j);
-                var thatEndCoord = toTwoD(end, j);
-                if ((thisCoord[0] == thatCoord[0]) &&(thisEndCoord[0] == thatEndCoord[0]) &&(thisEndCoord[0] < thatCoord[0] < thisCoord[0]))
-                {
-                    //console.log("innerif");
-                    distance += 1;
+                var Tk = toTwoD(other, j);
+                var TkEnd = toTwoD(end, j);
+                //if they are in the same row or column
+                if ((Tj[0] != Tk[0]) || (Tj[1] != Tk[1])){
+                    continue;
                 }
-                if ((thisCoord[1] == thatCoord[1]) && (thisEndCoord[1] == thatEndCoord[1])&&(thisEndCoord[1] < thatCoord[1] < thisCoord[1]))
-                {
-                    //console.log("innerif");
-                    distance += 1;
+                //if their goal coord in same row
+                if (TjEnd[0] == TkEnd[0]){
+                    //if Tj is to the right of Tk and goal of Tk is to the right of the goal of Tj
+                    if ((Tj[0] > Tkp[0] ) && (TjEnd[0] < TkEnd[0])){
+                        distance += 1;
+                    }
+                }
+                //if their goal coord in same row
+                if (TjEnd[1] == TkEnd[1]){
+                    //if Tj is to the right of Tk and goal of Tk is to the right of the goal of Tj
+                    if ((Tj[1] > Tkp[1] ) && (TjEnd[1] < TkEnd[1])){
+                        distance += 1;
+                    }
                 }
 
             }
         }
     }
-    //console.log(distance);
     return distance;
 }
 
 //X-Y: decompose the problem into two one dimensional problems where the "space" can swap with any tile in an adjacent
 //row/column. Add the number of steps from the two subproblems. Number of tiles out of row plus number of tiles out of
 //column.
-var XY = function (other) {
+var outOfRowAndColumn = function (other) {
+     opened += 1;
         if (!other) {
             var other = end.slice();
         }
@@ -274,7 +324,6 @@ var getNeighbors = function (node) {
         newMoves.push(swap(node, toOneD(x, y), toOneD(x, newy)));
     }
 
-    opened += 1;
     return newMoves;
 };
 
@@ -282,15 +331,51 @@ var distance = function (a, b) {
     return 1;
 }
 
-var results = aStar({
-    start: start,
-    isEnd: isEnd,
-    neighbor: getNeighbors,
-    distance: distance,
-    heuristic: manhattan,
-});
+var heuristicFunctions = [manhattan, nilsson, misplaced, outOfRowAndColumn, linearConflict, NMaxSwap ];
 
-//var moves = getNeighbors(end);
-//var path = aStar(options);
-console.log(results);
-console.log(opened);
+var run = function (start, heuristic, file) {
+    console.log("Running " + heuristic.name +" heuristics");
+    console.log("On: " +start);
+    var hrstart = process.hrtime();
+    var results = aStar({
+        start: start,
+        isEnd: isEnd,
+        neighbor: getNeighbors,
+        distance: distance,
+        heuristic: heuristic,
+    });
+    hrend = process.hrtime(hrstart);
+    console.info("Execution time: %ds %dms", hrend[0], hrend[1]/1000000);
+    console.log("Visited nodes: "+ opened);
+    console.log(results);
+    file += "Start node: " + start + "\n" +
+                 "Nodes opened: " + opened + "\n" +
+                 "Cost: " + results.cost + "\n" +
+                 ("Execution time: "+ hrend[0] + " sec " + hrend[1]/1000000 + "ms." ) +"\n"+
+                 "###############################################" + "\n";
+    return file;
+}
+
+
+var runAll = function (starts, heurs){
+    var toFile = "";
+    for(var i=0; i < 1; i ++){
+        for (var j=0; j < starts.length; j ++) {
+            toFile = run(starts[j], heurs[i], toFile );
+        }
+        var fs = require('fs');
+        fs.writeFile(process.cwd()+ "\\" + heurs[i].name + ".txt", toFile, function(err) {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log("file has been saved successfully");
+            }
+        });
+
+
+    }
+    console.log("All algorithms tested!");
+}
+
+runAll(sequence, heuristicFunctions)
+run(start, manhattan);
