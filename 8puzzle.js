@@ -59,6 +59,19 @@ var start =
         4, 2, 1];
 
 
+var end = [1, 2, 3,
+          8, 0, 4,
+          7, 6, 5];
+
+
+           //  0  1  2  3  4  5  6  7  8
+var mapping = [0, 1, 2, 5, 8, 7, 6, 3];
+
+//Clockwise mapping of the node
+var getClockwiseIndex=function (index) {
+    return mapping[index];
+}
+
 var opened = 0;
 
 // shallow entry-wise comparison
@@ -105,28 +118,12 @@ var manhattan = function (other) {
     for (var i = 0; i < 9; i++) {
         var thisCoord = toTwoD(other, i);
         var endCoord = toTwoD(end, i);
-        if ((thisCoord[0] != endCoord[0]) && (thisCoord[1] != endCoord[1])) {
+        if ((thisCoord[0] != endCoord[0]) || (thisCoord[1] != endCoord[1])) {
             distance += Math.abs(endCoord[0] - thisCoord[0]);
             distance += Math.abs(endCoord[1] - thisCoord[1]);
         }
     }
-    //console.log(distance);
     return distance;
-}
-
-
-var end = [1, 2, 3,
-           8, 0, 4,
-           7, 6, 5];
-
-
-           //  0  1  2  3  4  5  6  7  8
-var mapping = [0, 1, 2, 5, 8, 7, 6, 3];
-//var mapping = [0, 1, 2, 8, -1, 3, 7, 6, 5]
-
-//Clockwise mapping of the node
-var getClockwiseIndex=function (index) {
-    return mapping[index];
 }
 
 
@@ -140,25 +137,23 @@ var S = function (other) {
     if (other.indexOf(0) != end.indexOf(0)) {
         distance += 1;
     }
-    for (var i = 0; i < 8; i++) {
-        if(i==4){continue;}
-        if (other[getClockwiseIndex(i+1)] != other[getClockwiseIndex(i)] +1) {
-            //console.log(other[i] + "   " +other[i+1]);
+    for (var i = 0; i < 7; i++) {
+        if (other[getClockwiseIndex(i+1)] != (other[getClockwiseIndex(i)] +1)) {
             distance += 2;
         }
     }
     return distance;
 }
 
-var nilsson = function (other) {
+var NSS = function (other) {
     opened += 1;
     if (!other) {
         var other = end.slice();
     }
-    return manhattan(other)+  S(other);
+    return manhattan(other)+  (3 * S(other));
 }
 
-
+//Number of tiles that are not in the final position (not counting the blank)
 var misplaced = function (other) {
     opened += 1;
     if (!other) {
@@ -166,9 +161,12 @@ var misplaced = function (other) {
     }
     var distance = 0;
     for (var i = 0; i < 9; i++) {
-        var thisCoord = toTwoD(other, i);
-        var endCoord = toTwoD(end, i);
-        if ((thisCoord[0] != endCoord[0]) || (thisCoord[1] != endCoord[1])) {
+        //(not counting the blank)
+        if (other[i] == other.indexOf(0)){
+            continue;
+        }
+        //Check if tile in the final position
+        if (other.indexOf(i) != end.indexOf(i)){
             distance += 1;
         }
     }
@@ -232,8 +230,6 @@ var NMaxSwap = function (other) {
 //Linear Conflict Tiles Definition: Two tiles tj and tk are in a linear conflict if tj and tk are in the same line,
 // the goal positions of tj and tk are both in //that line, tj is to the right of tk and goal position of tj is to
 // the left of //the goal position of tk.
-
-//TODO: convert ot 1D
 var linearConflict = function (other) {
     opened += 1;
     if (!other) {
@@ -241,7 +237,6 @@ var linearConflict = function (other) {
     }
     var distance = 0;
     for (var i = 0; i < 9; i++) {
-        //console.log("inloop");
         var Tj = toTwoD(other, i);
         var TjEnd = toTwoD(end, i);
         for (var j = 0; j < 9; j++) {
@@ -266,16 +261,13 @@ var linearConflict = function (other) {
                         distance += 1;
                     }
                 }
-
             }
         }
     }
     return distance;
 }
 
-//X-Y: decompose the problem into two one dimensional problems where the "space" can swap with any tile in an adjacent
-//row/column. Add the number of steps from the two subproblems. Number of tiles out of row plus number of tiles out of
-//column.
+//h = Number of tiles out of row + number of tiles out of column
 var outOfRowAndColumn = function (other) {
      opened += 1;
         if (!other) {
@@ -286,9 +278,11 @@ var outOfRowAndColumn = function (other) {
             //console.log("inloop");
             var thisCoord = toTwoD(other, i);
             var endCoord = toTwoD(end, i);
+            //Different row
             if (thisCoord[0] != endCoord[0]) {
                 distance += 1;
             }
+            //Different column
             if (thisCoord[1] != endCoord[1]) {
                 distance += 1;
             }
@@ -331,9 +325,12 @@ var distance = function (a, b) {
     return 1;
 }
 
-var heuristicFunctions = [manhattan, nilsson, misplaced, outOfRowAndColumn, linearConflict, NMaxSwap ];
+//, NMaxSwap,
+//
+var heuristicFunctions = [manhattan, NSS, misplaced, outOfRowAndColumn, linearConflict];
 
 var run = function (start, heuristic, file) {
+    opened = 0;
     console.log("Running " + heuristic.name +" heuristics");
     console.log("On: " +start);
     var hrstart = process.hrtime();
@@ -358,13 +355,28 @@ var run = function (start, heuristic, file) {
 
 
 var runAll = function (starts, heurs){
-    var toFile = "";
-    for(var i=0; i < 1; i ++){
+    var toFile = "###############################################" + "\n";
+        toFile += "#  " + heurs[0].name + " Heuristics                    #\n";
+        toFile += "###############################################" + "\n";;
+
+    for(var i=0; i < heurs.length; i ++){
         for (var j=0; j < starts.length; j ++) {
             toFile = run(starts[j], heurs[i], toFile );
         }
+
+        if (i<heurs.length - 1) {
+            var header = heurs[i + 1].name;
+        }
+        else {var header = "All Done!";}
+
+        toFile += "###############################################" + "\n";
+        toFile += "#  " + header + " Heuristics                    #\n";
+        toFile += "###############################################" + "\n";
         var fs = require('fs');
-        fs.writeFile(process.cwd()+ "\\" + heurs[i].name + ".txt", toFile, function(err) {
+
+
+
+        fs.writeFile(process.cwd() + "\\" + header + ".txt", toFile, function(err) {
             if(err) {
                 console.log(err);
             } else {
