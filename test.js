@@ -1,4 +1,11 @@
+var aStar = require('a-star');
+var Eightpuzzle = require('8puzzle');
 
+
+
+var start = [0, 2, 1,
+             7, 4, 5,
+             6, 3, 8];
 
 var other = [1, 2, 3,
              8, 0, 5,
@@ -26,3 +33,5 @@ for (var i = 0; i < 7; i++) {
 
 }
 }
+
+

@@ -2,56 +2,59 @@ var aStar = require('a-star');
 var sequence = [
 
     //var start9 =
-    [7, 6, 0,
+       [7, 6, 0,
         8, 2, 4,
         5, 1, 3],
 
     //var start14 =
-    [8, 6, 3,
+       [8, 6, 3,
         4, 5, 1,
         7, 0, 2],
 
     //var start23 =
-    [8, 6, 3,
+       [8, 6, 3,
         5, 1, 2,
         4, 0, 7],
 
     //var start4 =
-    [5, 8, 3,
+       [5, 8, 3,
         0, 6, 7,
         4, 2, 1],
 
     //var start10 =
-    [8, 7, 3,
+       [8, 7, 3,
         0, 6, 5,
         4, 2, 1],
 
     //var start16 =
-    [7, 6, 3,
+       [7, 6, 3,
         0, 4, 2,
         8, 5, 1],
 
     //var start13 =
-    [8, 7, 6,
+       [8, 7, 6,
         5, 2, 0,
         4, 1, 3],
 
     //var start25 =
-    [2, 8, 6,
+       [2, 8, 6,
         7, 0, 3,
         5, 4, 1],
 
     //var start19 =
-    [7, 2, 6,
+       [7, 2, 6,
         8, 4, 0,
         5, 1, 3],
 
     //var start22 =
-    [8, 6, 0,
+       [8, 6, 0,
         4, 7, 3,
         2, 5, 1]
 ]
 
+var hard =   [0, 2, 1,
+              7, 4, 5,
+              6, 3, 8];
 
 var start =
        [5, 8, 6,
@@ -162,7 +165,7 @@ var misplaced = function (other) {
     var distance = 0;
     for (var i = 0; i < 9; i++) {
         //(not counting the blank)
-        if (other[i] == other.indexOf(0)){
+        if (i == other.indexOf(0)){
             continue;
         }
         //Check if tile in the final position
@@ -171,7 +174,7 @@ var misplaced = function (other) {
         }
     }
     //console.log(distance);
-    return distance;
+    return  distance;
 }
 
 
@@ -188,28 +191,6 @@ var getNeighborsMaxSwap = function (node) {
     //console.log(newMoves);
     return newMoves;
 }
-
-
-/*
-var getPermutations= function (other){
-    var temp = other.slice();
-    while(!(arraysEqual(temp, end))){
-        for (var i = 0; i < 9; i++) {
-            if ((temp.indexOf(i) != end.indexOf(i)) && (i != temp.indexOf(0))) {
-                swap(temp, temp.indexOf(0),i);
-            }
-        }
-        console.log(temp);
-
-    }
-
-}
-
-getPermutations();
-*/
-
-
-
 
 
 //n-MaxSwap: assume you can swap any tile with the "space". Use the number of steps it takes to solve this problem
@@ -264,7 +245,8 @@ var linearConflict = function (other) {
             }
         }
     }
-    return distance;
+    var MD = manhattan(other);
+    return MD + distance;
 }
 
 //h = Number of tiles out of row + number of tiles out of column
@@ -273,24 +255,28 @@ var outOfRowAndColumn = function (other) {
         if (!other) {
             var other = end.slice();
         }
-        var distance = 0;
+        var row = 0;
+        var column = 0;
         for (var i = 0; i < 9; i++) {
-            //console.log("inloop");
+            //not counting 0
+            if (i == other.indexOf(0)){
+                continue;
+            }
             var thisCoord = toTwoD(other, i);
             var endCoord = toTwoD(end, i);
             //Different row
             if (thisCoord[0] != endCoord[0]) {
-                distance += 1;
+                row += 1;
             }
             //Different column
             if (thisCoord[1] != endCoord[1]) {
-                distance += 1;
+                column += 1;
             }
         }
-        return distance;
-    }
+        return row + column;
+}
 
-
+//function to generate neighbors
 var getNeighbors = function (node) {
 
     var newMoves = [];
@@ -325,8 +311,7 @@ var distance = function (a, b) {
     return 1;
 }
 
-//, NMaxSwap,
-//
+
 var heuristicFunctions = [manhattan, NSS, misplaced, outOfRowAndColumn, linearConflict];
 
 var run = function (start, heuristic, file) {
@@ -390,4 +375,3 @@ var runAll = function (starts, heurs){
 }
 
 runAll(sequence, heuristicFunctions)
-run(start, manhattan);
