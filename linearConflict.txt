@@ -2,213 +2,213 @@
 #  manhattan Heuristics                    #
 ###############################################
 Start node: 7,6,0,8,2,4,5,1,3
-Nodes opened: 2098
+Nodes opened: 0
 Cost: 24
-Execution time: 0 sec 35.54444ms.
+Execution time: 0 sec 34.801461ms.
 ###############################################
 Start node: 8,6,3,4,5,1,7,0,2
-Nodes opened: 205
+Nodes opened: 0
 Cost: 17
-Execution time: 0 sec 3.37718ms.
+Execution time: 0 sec 3.213574ms.
 ###############################################
 Start node: 8,6,3,5,1,2,4,0,7
-Nodes opened: 763
+Nodes opened: 0
 Cost: 21
-Execution time: 0 sec 7.564282ms.
+Execution time: 0 sec 7.036241ms.
 ###############################################
 Start node: 5,8,3,0,6,7,4,2,1
-Nodes opened: 2441
+Nodes opened: 0
 Cost: 25
-Execution time: 0 sec 31.999152ms.
+Execution time: 0 sec 31.019619ms.
 ###############################################
 Start node: 8,7,3,0,6,5,4,2,1
-Nodes opened: 464
+Nodes opened: 0
 Cost: 21
-Execution time: 0 sec 4.157083ms.
+Execution time: 0 sec 3.911825ms.
 ###############################################
 Start node: 7,6,3,0,4,2,8,5,1
-Nodes opened: 9107
+Nodes opened: 0
 Cost: 27
-Execution time: 0 sec 137.711479ms.
+Execution time: 0 sec 127.544217ms.
 ###############################################
 Start node: 8,7,6,5,2,0,4,1,3
-Nodes opened: 549
+Nodes opened: 0
 Cost: 23
-Execution time: 0 sec 6.118849ms.
+Execution time: 0 sec 5.82556ms.
 ###############################################
 Start node: 2,8,6,7,0,3,5,4,1
-Nodes opened: 374
+Nodes opened: 0
 Cost: 20
-Execution time: 0 sec 3.760527ms.
+Execution time: 0 sec 3.652457ms.
 ###############################################
 Start node: 7,2,6,8,4,0,5,1,3
-Nodes opened: 2307
+Nodes opened: 0
 Cost: 23
-Execution time: 0 sec 27.290614ms.
+Execution time: 0 sec 27.067269ms.
 ###############################################
 Start node: 8,6,0,4,7,3,2,5,1
-Nodes opened: 525
+Nodes opened: 0
 Cost: 22
-Execution time: 0 sec 4.933684ms.
+Execution time: 0 sec 4.527222ms.
 ###############################################
 ###############################################
 #  NSS Heuristics                    #
 ###############################################
 Start node: 7,6,0,8,2,4,5,1,3
-Nodes opened: 518
+Nodes opened: 0
 Cost: 26
-Execution time: 0 sec 4.066124ms.
+Execution time: 0 sec 3.847583ms.
 ###############################################
 Start node: 8,6,3,4,5,1,7,0,2
-Nodes opened: 402
+Nodes opened: 0
 Cost: 25
-Execution time: 0 sec 2.319897ms.
+Execution time: 0 sec 2.149988ms.
 ###############################################
 Start node: 8,6,3,5,1,2,4,0,7
-Nodes opened: 950
+Nodes opened: 0
 Cost: 29
-Execution time: 0 sec 4.802199ms.
+Execution time: 0 sec 6.513604ms.
 ###############################################
 Start node: 5,8,3,0,6,7,4,2,1
-Nodes opened: 1128
+Nodes opened: 0
 Cost: 31
-Execution time: 0 sec 11.811423ms.
+Execution time: 0 sec 11.280081ms.
 ###############################################
 Start node: 8,7,3,0,6,5,4,2,1
-Nodes opened: 740
+Nodes opened: 0
 Cost: 23
-Execution time: 0 sec 3.559998ms.
+Execution time: 0 sec 3.354665ms.
 ###############################################
 Start node: 7,6,3,0,4,2,8,5,1
-Nodes opened: 454
+Nodes opened: 0
 Cost: 27
-Execution time: 0 sec 2.020003ms.
+Execution time: 0 sec 1.987283ms.
 ###############################################
 Start node: 8,7,6,5,2,0,4,1,3
-Nodes opened: 300
+Nodes opened: 0
 Cost: 27
-Execution time: 0 sec 1.355375ms.
+Execution time: 0 sec 1.294735ms.
 ###############################################
 Start node: 2,8,6,7,0,3,5,4,1
-Nodes opened: 218
+Nodes opened: 0
 Cost: 28
-Execution time: 0 sec 1.087602ms.
+Execution time: 0 sec 0.969026ms.
 ###############################################
 Start node: 7,2,6,8,4,0,5,1,3
-Nodes opened: 478
+Nodes opened: 0
 Cost: 33
-Execution time: 0 sec 3.551292ms.
+Execution time: 0 sec 3.457331ms.
 ###############################################
 Start node: 8,6,0,4,7,3,2,5,1
-Nodes opened: 292
+Nodes opened: 0
 Cost: 28
-Execution time: 0 sec 1.364381ms.
+Execution time: 0 sec 1.333761ms.
 ###############################################
 ###############################################
 #  misplaced Heuristics                    #
 ###############################################
 Start node: 7,6,0,8,2,4,5,1,3
-Nodes opened: 36383
+Nodes opened: 0
 Cost: 24
-Execution time: 1 sec 142.0814ms.
+Execution time: 1 sec 121.358725ms.
 ###############################################
 Start node: 8,6,3,4,5,1,7,0,2
-Nodes opened: 2386
+Nodes opened: 0
 Cost: 17
-Execution time: 0 sec 23.953659ms.
+Execution time: 0 sec 22.703953ms.
 ###############################################
 Start node: 8,6,3,5,1,2,4,0,7
-Nodes opened: 14243
+Nodes opened: 0
 Cost: 21
-Execution time: 0 sec 201.525765ms.
+Execution time: 0 sec 196.490015ms.
 ###############################################
 Start node: 5,8,3,0,6,7,4,2,1
-Nodes opened: 58848
+Nodes opened: 0
 Cost: 25
-Execution time: 3 sec 123.627289ms.
+Execution time: 2 sec 992.106105ms.
 ###############################################
 Start node: 8,7,3,0,6,5,4,2,1
-Nodes opened: 11352
+Nodes opened: 0
 Cost: 21
-Execution time: 0 sec 138.431644ms.
+Execution time: 0 sec 134.006187ms.
 ###############################################
 Start node: 7,6,3,0,4,2,8,5,1
-Nodes opened: 89836
+Nodes opened: 0
 Cost: 27
-Execution time: 8 sec 740.014505ms.
+Execution time: 8 sec 676.818019ms.
 ###############################################
 Start node: 8,7,6,5,2,0,4,1,3
-Nodes opened: 29621
+Nodes opened: 0
 Cost: 23
-Execution time: 0 sec 734.432402ms.
+Execution time: 0 sec 692.1288ms.
 ###############################################
 Start node: 2,8,6,7,0,3,5,4,1
-Nodes opened: 9550
+Nodes opened: 0
 Cost: 20
-Execution time: 0 sec 108.353732ms.
+Execution time: 0 sec 97.758093ms.
 ###############################################
 Start node: 7,2,6,8,4,0,5,1,3
-Nodes opened: 33112
+Nodes opened: 0
 Cost: 23
-Execution time: 0 sec 970.76173ms.
+Execution time: 1 sec 42.84275ms.
 ###############################################
 Start node: 8,6,0,4,7,3,2,5,1
-Nodes opened: 15311
+Nodes opened: 0
 Cost: 22
-Execution time: 0 sec 224.037894ms.
+Execution time: 0 sec 212.811248ms.
 ###############################################
 ###############################################
 #  outOfRowAndColumn Heuristics                    #
 ###############################################
 Start node: 7,6,0,8,2,4,5,1,3
-Nodes opened: 13114
+Nodes opened: 0
 Cost: 24
-Execution time: 0 sec 191.793183ms.
+Execution time: 0 sec 171.955781ms.
 ###############################################
 Start node: 8,6,3,4,5,1,7,0,2
-Nodes opened: 819
+Nodes opened: 0
 Cost: 17
-Execution time: 0 sec 6.730944ms.
+Execution time: 0 sec 6.568539ms.
 ###############################################
 Start node: 8,6,3,5,1,2,4,0,7
-Nodes opened: 3051
+Nodes opened: 0
 Cost: 21
-Execution time: 0 sec 22.65382ms.
+Execution time: 0 sec 21.384301ms.
 ###############################################
 Start node: 5,8,3,0,6,7,4,2,1
-Nodes opened: 14198
+Nodes opened: 0
 Cost: 25
-Execution time: 0 sec 194.611703ms.
+Execution time: 0 sec 186.203276ms.
 ###############################################
 Start node: 8,7,3,0,6,5,4,2,1
-Nodes opened: 5082
+Nodes opened: 0
 Cost: 21
-Execution time: 0 sec 45.632451ms.
+Execution time: 0 sec 41.906146ms.
 ###############################################
 Start node: 7,6,3,0,4,2,8,5,1
-Nodes opened: 36613
+Nodes opened: 0
 Cost: 27
-Execution time: 1 sec 137.948332ms.
+Execution time: 1 sec 237.235912ms.
 ###############################################
 Start node: 8,7,6,5,2,0,4,1,3
-Nodes opened: 10744
+Nodes opened: 0
 Cost: 23
-Execution time: 0 sec 117.449902ms.
+Execution time: 0 sec 114.64159ms.
 ###############################################
 Start node: 2,8,6,7,0,3,5,4,1
-Nodes opened: 2022
+Nodes opened: 0
 Cost: 20
-Execution time: 0 sec 16.148923ms.
+Execution time: 0 sec 15.181098ms.
 ###############################################
 Start node: 7,2,6,8,4,0,5,1,3
-Nodes opened: 13214
+Nodes opened: 0
 Cost: 23
-Execution time: 0 sec 207.397255ms.
+Execution time: 0 sec 187.935694ms.
 ###############################################
 Start node: 8,6,0,4,7,3,2,5,1
-Nodes opened: 4492
+Nodes opened: 0
 Cost: 22
-Execution time: 0 sec 38.40949ms.
+Execution time: 0 sec 36.352261ms.
 ###############################################
 ###############################################
 #  linearConflict Heuristics                    #
