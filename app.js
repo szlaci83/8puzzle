@@ -14,7 +14,6 @@ var aStar = require('a-star');
 var heuristicFunctions = [heuristics.manhattan, heuristics.NSS, heuristics.misplaced, heuristics.outOfRowAndColumn, heuristics.linearConflict];
 
 var run = function (start, heuristic, file) {
-    opened = 0;
     console.log("Running " + heuristic.name + " heuristics");
     console.log("On: " + start);
     var hrstart = process.hrtime();
@@ -27,10 +26,10 @@ var run = function (start, heuristic, file) {
     });
     hrend = process.hrtime(hrstart);
     console.info("Execution time: %ds %dms", hrend[0], hrend[1] / 1000000);
-    console.log("Visited nodes: " + opened);
+    console.log("Visited nodes: " + results.nodes);
     console.log(results);
     file += "Start node: " + start + "\n" +
-        "Nodes opened: " + opened + "\n" +
+        "Nodes opened: " + results.nodes + "\n" +
         "Cost: " + results.cost + "\n" +
         ("Execution time: " + hrend[0] + " sec " + hrend[1] / 1000000 + "ms." ) + "\n" +
         "###############################################" + "\n";

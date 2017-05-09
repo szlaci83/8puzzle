@@ -3,7 +3,8 @@
  *
  *  Module with the implemented heuristic functions, and helper functions.
  *
- *  uses the a-star search module.
+ *  uses the modified version of the a-star search module.
+ *  (I added functionality to return node information to it.)
  */
 
 var aStar = require('a-star');
@@ -58,7 +59,6 @@ var swap = function (arr, a, b) {
 }
 
 var manhattan = function (other) {
-    opened += 1;
     if (!other) {
         var other = end.slice();
     }
@@ -95,7 +95,6 @@ var S = function (other) {
 
 //Nilson's Sequence Score
 var NSS = function (other) {
-    opened += 1;
     if (!other) {
         var other = end.slice();
     }
@@ -104,7 +103,6 @@ var NSS = function (other) {
 
 //Number of tiles that are not in the final position (not counting the blank)
 var misplaced = function (other) {
-    opened += 1;
     if (!other) {
         var other = end.slice();
     }
@@ -142,7 +140,6 @@ var getNeighborsMaxSwap = function (node) {
 //n-MaxSwap: assume you can swap any tile with the "space". Use the number of steps it takes to solve this problem
 // as the heuristic value.
 var NMaxSwap = function (other) {
-    opened += 1;
     var results = aStar({
         start: start,
         isEnd: isEnd,
@@ -158,7 +155,6 @@ var NMaxSwap = function (other) {
 // the goal positions of tj and tk are both in //that line, tj is to the right of tk and goal position of tj is to
 // the left of //the goal position of tk.
 var linearConflict = function (other) {
-    opened += 1;
     if (!other) {
         var other = end.slice();
     }
@@ -197,7 +193,6 @@ var linearConflict = function (other) {
 
 //h = Number of tiles out of row + number of tiles out of column
 var outOfRowAndColumn = function (other) {
-    opened += 1;
     if (!other) {
         var other = end.slice();
     }
